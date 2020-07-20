@@ -11,6 +11,7 @@ public class WeaponScript : MonoBehaviour
     [SerializeField] float _range;
     [SerializeField] int _powerOfHit = 1;
     [SerializeField] private ParticleSystem muzzleFlesh;
+    [SerializeField] private ParticleSystem collisionParticle;
     void Update()
     {
         if (Input.GetButtonDown("Fire1"))
@@ -30,18 +31,27 @@ public class WeaponScript : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(FPCamera.transform.position, FPCamera.transform.forward, out hit, _range))
         {
-            EnemyHealth target = hit.transform.GetComponent<EnemyHealth>();
-            if (target)
+            CollisionParticle(hit);
+            EnemyHealth targetHealth = hit.transform.GetComponent<EnemyHealth>();
+            if (targetHealth)
             {
-                target.DecreaseHealth(_powerOfHit);
+                targetHealth.DecreaseHealth(_powerOfHit);
             }
-            
-            //todo make some visual effects for hitting the enemy;
-            //todo call a method to decreases enemy health;
+            EnemyAI targetAI = hit.transform.GetComponent<EnemyAI>();
+            if (targetAI)
+            {
+                targetAI._isProvoke = true;
+            }
         }
         else
         {
             
         }
+    }
+
+    void CollisionParticle(RaycastHit hit)
+    {
+        var particle = Instantiate(collisionParticle, hit.point, Quaternion.LookRotation(hit.normal));
+        Destroy(particle.gameObject, 1f);
     }
 }
