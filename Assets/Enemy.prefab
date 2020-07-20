@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 6824131405226850785}
   - component: {fileID: 6824131405226850790}
   - component: {fileID: 6824131405226850786}
+  - component: {fileID: 8968494075626485536}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -230,3 +231,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _targetToMove: {fileID: 0}
   _detectRadius: 10
+--- !u!114 &8968494075626485536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6824131405226850788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2f5942b6e952044189bdc0127daf7dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
