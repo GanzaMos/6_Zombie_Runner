@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class WeaponScript : MonoBehaviour
 {
@@ -9,12 +10,19 @@ public class WeaponScript : MonoBehaviour
     [SerializeField] Camera FPCamera;
     [SerializeField] float _range;
     [SerializeField] int _powerOfHit = 1;
+    [SerializeField] private ParticleSystem muzzleFlesh;
     void Update()
     {
         if (Input.GetButtonDown("Fire1"))
         {
             Shoot();
+            MuzzleFlesh();
         }
+    }
+
+    private void MuzzleFlesh()
+    {
+        muzzleFlesh.Play();
     }
 
     private void Shoot()
