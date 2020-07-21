@@ -30,7 +30,6 @@ public class EnemyAI : MonoBehaviour
         
         CheckIsProvoke();
         
-
         if (_isProvoke == true)
         {
             //FaceToTarget();
@@ -66,9 +65,14 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    public void ReactionWhenHit()
+    {
+        _isProvoke = true;
+    }
+
     private void EngageTarget()
     {
-        if (_distanceToTarget < _detectRadius && _distanceToTarget >= _navMeshAgent.stoppingDistance)
+        if (_distanceToTarget >= _navMeshAgent.stoppingDistance)
         {
             ChaseTarget();
         }
