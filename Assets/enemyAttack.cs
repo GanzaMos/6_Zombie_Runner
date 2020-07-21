@@ -14,5 +14,6 @@ public class enemyAttack : MonoBehaviour
     public void HitPerAttack()
     {
         Debug.Log("Hit!");
+        target.GetComponent<PlayerHealth>().TakingDamage(attackPower);
     }
 }
