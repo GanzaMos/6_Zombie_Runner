@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("You has taken " + damage + " damage. " + playerHitpoint + " left");
         if (playerHitpoint <= 0)
         {
-            Debug.Log("You DIE!");
+            FindObjectOfType<DeathHandler>().StartDeath();
         }
     }
 }

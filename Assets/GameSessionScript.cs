@@ -8,6 +8,7 @@ public class GameSessionScript : MonoBehaviour
     public void LoadLevel()
     {
         SceneManager.LoadScene(0);
+        Time.timeScale = 1;
     }
 
     public void ExitGame()
