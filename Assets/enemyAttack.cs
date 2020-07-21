@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class enemyAttack : MonoBehaviour
+public class EnemyAttack : MonoBehaviour
 {
-    [SerializeField] private Transform target;
+    PlayerHealth target;
     [SerializeField] private int attackPower = 40;
     void Start()
     {
-        
+        target = FindObjectOfType<PlayerHealth>();
     }
 
     public void HitPerAttack()
     {
         Debug.Log("Hit!");
-        target.GetComponent<PlayerHealth>().TakingDamage(attackPower);
+        target.TakingDamage(attackPower);
     }
 }

@@ -29,9 +29,12 @@ public class EnemyAI : MonoBehaviour
     {
         
         CheckIsProvoke();
+        
 
         if (_isProvoke == true)
         {
+            //FaceToTarget();
+            FaceToTargetWithSpeed();
             EngageTarget();
         }
         else
@@ -39,7 +42,19 @@ public class EnemyAI : MonoBehaviour
             _animator.SetTrigger("idle");
         }
     }
-    
+
+    private void FaceToTargetWithSpeed()
+    {
+        Vector3 diractionToFace = (_targetToMove.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(diractionToFace.x, 0, diractionToFace.z));
+        transform.rotation = Quaternion.Slerp(transform.rotation.normalized, lookRotation, Time.deltaTime * turnSpeed);
+    }
+
+    private void FaceToTarget()
+    {
+        transform.LookAt(_targetToMove.position);
+    }
+
 
     void CheckIsProvoke()
     {
