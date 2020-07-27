@@ -8,10 +8,11 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
-    [SerializeField] private Transform _targetToMove;
+    
     [SerializeField] float _detectRadius = 10;
-
     [SerializeField] float turnSpeed = 30;
+    
+    Transform _targetToMove;
     NavMeshAgent _navMeshAgent;
     Animator _animator;
     public bool _isProvoke = false;
@@ -22,7 +23,7 @@ public class EnemyAI : MonoBehaviour
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
-
+        _targetToMove = FindObjectOfType<Camera>().transform;
     }
     
     void Update()
@@ -61,10 +62,22 @@ public class EnemyAI : MonoBehaviour
 
         if (_distanceToTarget < _detectRadius)
         {
-            _isProvoke = true;
+            if (isPlayerVisible() == true)
+            {
+                _isProvoke = true;
+            }
         }
     }
-
+    public bool isPlayerVisible() {
+        Vector3 direction = _targetToMove.position - transform.position;
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, direction, out hit))
+        {
+            PlayerHealth player = hit.transform.GetComponent<PlayerHealth>();
+            if (player != null) return true;     //definitely a player
+        }
+        return false;    //didn't hit anything or wasn't a player
+    }
     public void ReactionWhenHit()
     {
         _isProvoke = true;
