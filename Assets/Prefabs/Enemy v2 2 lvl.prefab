@@ -259,9 +259,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3aeb98a88e06564199fec8af2d844ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detectRadius: 10
   turnSpeed: 60
   _isProvoke: 0
+  _detectRadius: 10
+  _radiusToProvokeNeighbors: 5
+  "_chan\u0441eToProvokeNeighbors": 0.3
 --- !u!195 &7793619319476309129
 NavMeshAgent:
   m_ObjectHideFlags: 0
