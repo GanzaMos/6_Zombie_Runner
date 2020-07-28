@@ -40,12 +40,8 @@ public class WeaponScript : MonoBehaviour
             EnemyAI targetAI = hit.transform.GetComponent<EnemyAI>();
             if (targetAI)
             {
-                targetAI._isProvoke = true;
+                targetAI.Provoking();
             }
-        }
-        else
-        {
-            
         }
     }
 

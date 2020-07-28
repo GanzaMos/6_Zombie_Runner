@@ -9,7 +9,6 @@ public class EnemyHealth : MonoBehaviour
 
     public void DecreaseHealth(int _powerOfHit)
     {
-        BroadcastMessage("ReactionWhenHit");
         _enemyHealth -= _powerOfHit;
         if (_enemyHealth <= 0)
         {
