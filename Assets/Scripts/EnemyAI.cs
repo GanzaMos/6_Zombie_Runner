@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using UnityEngine;
 using UnityEngine.AI;
-using Random = System.Random;
+using Random = UnityEngine.Random;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -84,8 +84,11 @@ public class EnemyAI : MonoBehaviour
                 //Debug.Log(IsEnemyVisible(maybeEnemy.transform));
                 if (IsEnemyVisible(maybeEnemy.transform))
                 {
-                    maybeEnemy.GetComponent<EnemyAI>()._isProvoke = true;
-                    Debug.Log("True");
+                    if (Random.Range(0f, 1f) <= _chanсeToProvokeNeighbors)
+                    {
+                        maybeEnemy.GetComponent<EnemyAI>()._isProvoke = true;
+                        Debug.Log("True"); 
+                    }
                 }
             }
         }

@@ -261,6 +261,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _detectRadius: 10
   turnSpeed: 30
+  _radiusToProvokeNeighbors: 10
+  "_chan\u0441eToProvokeNeighbors": 0.3
   _isProvoke: 0
 --- !u!195 &7793619319476309129
 NavMeshAgent:
@@ -296,7 +298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b21932f64eae0924bab6331c204eff4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPower: 40
+  attackPower: 30
 --- !u!136 &1756452277
 CapsuleCollider:
   m_ObjectHideFlags: 0
