@@ -18,8 +18,8 @@ public class WeaponZoom : MonoBehaviour
     
     private void Start()
     {
-        camera = GetComponentInChildren<Camera>();
-        controller = GetComponent<RigidbodyFirstPersonController>();
+        camera = GetComponentInParent<Camera>();
+        controller = GetComponentInParent<RigidbodyFirstPersonController>();
         _startXSensitivity = controller.mouseLook.XSensitivity;
         _startYSensitivity = controller.mouseLook.YSensitivity;
     }

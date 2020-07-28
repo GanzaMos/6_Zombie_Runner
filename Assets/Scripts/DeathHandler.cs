@@ -7,7 +7,7 @@ public class DeathHandler : MonoBehaviour
 
 
 {
-    [SerializeField] Canvas DeathCanvas;
+    [SerializeField] private Canvas DeathCanvas;
 
     void Start()
     {
