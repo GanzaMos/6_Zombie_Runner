@@ -15,14 +15,19 @@ public class WeaponScript : MonoBehaviour
     [SerializeField] private ParticleSystem collisionParticle;
     [SerializeField] private float _shotSoundRadius = 10;
     [Range(0f, 1f)][SerializeField] private float _chanсeToProvokeByShootSound = 0.5f;
+    [SerializeField] private Ammo _ammoSlot;
     
     void Update()
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            Shoot();
-            MuzzleFlesh();
-            ProvokingEnemiesByLoud();
+            if (_ammoSlot.GetCurrentAmmo() != 0)
+            {
+                Shoot();
+                MuzzleFlesh();
+                ProvokingEnemiesByLoud();
+                _ammoSlot.ReduceCurrentAmmo();
+            }
         }
     }
 
