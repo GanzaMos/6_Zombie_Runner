@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -16,17 +17,21 @@ public class WeaponScript : MonoBehaviour
     [SerializeField] private float _shotSoundRadius = 10;
     [Range(0f, 1f)][SerializeField] private float _chanсeToProvokeByShootSound = 0.5f;
     [SerializeField] private Ammo _ammoSlot;
-    
+    [SerializeField] private float _timeBetweenShoots = 0.5f;
+
+    private bool _readyToShoot = true;
+
+    public enum FireType {Single, Auto};
+    public FireType _thisWeaponFireType = FireType.Single;
+
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && _thisWeaponFireType == FireType.Single || 
+            Input.GetButton("Fire1") && _thisWeaponFireType == FireType.Auto)
         {
-            if (_ammoSlot.GetCurrentAmmo() != 0)
+            if (_ammoSlot.GetCurrentAmmo() != 0 && _readyToShoot)
             {
-                Shoot();
-                MuzzleFlesh();
-                ProvokingEnemiesByLoud();
-                _ammoSlot.ReduceCurrentAmmo();
+                StartCoroutine(Shoot());
             }
         }
     }
@@ -36,7 +41,18 @@ public class WeaponScript : MonoBehaviour
         muzzleFlesh.Play();
     }
 
-    private void Shoot()
+    IEnumerator Shoot()
+    {
+        _readyToShoot = false;
+        MuzzleFlesh();
+        ProvokingEnemiesByLoud();
+        _ammoSlot.ReduceCurrentAmmo();
+        HitOnTarget();
+        yield return new WaitForSeconds(_timeBetweenShoots);
+        _readyToShoot = true;
+    }
+
+    private void HitOnTarget()
     {
         RaycastHit hit;
         if (Physics.Raycast(FPCamera.transform.position, FPCamera.transform.forward, out hit, _range))
@@ -47,6 +63,7 @@ public class WeaponScript : MonoBehaviour
             {
                 targetHealth.DecreaseHealth(_powerOfHit);
             }
+
             EnemyAI targetAI = hit.transform.GetComponent<EnemyAI>();
             if (targetAI)
             {

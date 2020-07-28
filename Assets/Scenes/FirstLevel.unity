@@ -9239,6 +9239,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1655887864146574915, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: _timeBetweenShoots
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 2199486906760702696, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -9246,6 +9250,14 @@ PrefabInstance:
     - target: {fileID: 3646987678262723882, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3783652858571217064, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: _timeBetweenShoots
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3783652858571217064, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: _powerOfHit
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4034971589191187133, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
       propertyPath: m_IsActive
@@ -9255,6 +9267,22 @@ PrefabInstance:
       propertyPath: DeathCanvas
       value: 
       objectReference: {fileID: 1422924819}
+    - target: {fileID: 4987527211941635582, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: _timeBetweenShoots
+      value: 0.175
+      objectReference: {fileID: 0}
+    - target: {fileID: 4987527211941635582, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: _thisWeaponFireType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7769559246640124508, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: _timeBetweenShoots
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7769559246640124508, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: _thisWeaponFireType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7905947937753400624, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
       propertyPath: m_IsActive
       value: 0
