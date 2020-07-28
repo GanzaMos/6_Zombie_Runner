@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.VFX;
+using Random = UnityEngine.Random;
 
 public class WeaponScript : MonoBehaviour
 {
@@ -12,12 +13,16 @@ public class WeaponScript : MonoBehaviour
     [SerializeField] int _powerOfHit = 1;
     [SerializeField] private ParticleSystem muzzleFlesh;
     [SerializeField] private ParticleSystem collisionParticle;
+    [SerializeField] private float _shotSoundRadius = 10;
+    [Range(0f, 1f)][SerializeField] private float _chanсeToProvokeByShootSound = 0.5f;
+    
     void Update()
     {
         if (Input.GetButtonDown("Fire1"))
         {
             Shoot();
             MuzzleFlesh();
+            ProvokingEnemiesByLoud();
         }
     }
 
@@ -41,6 +46,21 @@ public class WeaponScript : MonoBehaviour
             if (targetAI)
             {
                 targetAI.Provoking();
+            }
+        }
+    }
+
+    private void ProvokingEnemiesByLoud()
+    {
+        Collider[] objectsInProvokeRadius = Physics.OverlapSphere(transform.position, _shotSoundRadius);
+        foreach (var maybeEnemy in objectsInProvokeRadius)
+        {
+            if (maybeEnemy.GetComponent<EnemyAI>())
+            {
+                if (Random.Range(0f, 1f) <= _chanсeToProvokeByShootSound)
+                {
+                    maybeEnemy.GetComponent<EnemyAI>()._isProvoke = true;
+                }
             }
         }
     }

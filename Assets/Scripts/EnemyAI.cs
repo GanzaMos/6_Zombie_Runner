@@ -9,16 +9,18 @@ using Random = UnityEngine.Random;
 
 public class EnemyAI : MonoBehaviour
 {
-    
-    [SerializeField] float _detectRadius = 10;
+    [Header("Movement")]
     [SerializeField] float turnSpeed = 30;
+    
+    [Header("Provoking")]
+    public bool _isProvoke = false;
+    [SerializeField] float _detectRadius = 10;
     [SerializeField] private float _radiusToProvokeNeighbors = 20f;
-    [SerializeField] private float _chanсeToProvokeNeighbors = 0.3f;
+    [Range(0f, 1f)][SerializeField] private float _chanсeToProvokeNeighbors = 0.3f;
     
     Transform _targetToMove;
     NavMeshAgent _navMeshAgent;
     Animator _animator;
-    public bool _isProvoke = false;
     private float _distanceToTarget;
 
     
@@ -80,14 +82,11 @@ public class EnemyAI : MonoBehaviour
         {
             if (maybeEnemy.GetComponent<EnemyAI>())
             {
-                //Debug.Log(maybeEnemy.name);
-                //Debug.Log(IsEnemyVisible(maybeEnemy.transform));
                 if (IsEnemyVisible(maybeEnemy.transform))
                 {
                     if (Random.Range(0f, 1f) <= _chanсeToProvokeNeighbors)
                     {
                         maybeEnemy.GetComponent<EnemyAI>()._isProvoke = true;
-                        Debug.Log("True"); 
                     }
                 }
             }
