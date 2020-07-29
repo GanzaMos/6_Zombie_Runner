@@ -19323,6 +19323,7 @@ GameObject:
   - component: {fileID: 1623682497}
   - component: {fileID: 1623682499}
   - component: {fileID: 1623682498}
+  - component: {fileID: 1623682500}
   m_Layer: 5
   m_Name: Reticle Panel
   m_TagString: Untagged
@@ -19391,6 +19392,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1623682496}
   m_CullTransparentMesh: 0
+--- !u!114 &1623682500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1623682496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f554ba4904dfd845ba15d3b688ec5b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sizeModifier: 0
 --- !u!1 &1648111137 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1290575257845056, guid: 4acc8aea0f8e2a8478f32ed296d7152a, type: 3}

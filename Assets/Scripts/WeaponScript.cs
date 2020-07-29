@@ -37,18 +37,25 @@ public class WeaponScript : MonoBehaviour
 
     private float _currentBulletSpread;
     private bool _readyToShoot = true;
+    private ReticlePanel reticlePanel;
 
-
-
-
+    
     private void Start()
     {
         _currentBulletSpread = _minBulletSpread;
+        reticlePanel = FindObjectOfType<ReticlePanel>();
     }
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1") && _weaponFireType == FireType.Single || 
+        CheckTermsToShoot();
+        RecoilDecrease();
+        reticlePanel._sizeModifier = _currentBulletSpread;
+    }
+
+    private void CheckTermsToShoot()
+    {
+        if (Input.GetButtonDown("Fire1") && _weaponFireType == FireType.Single ||
             Input.GetButton("Fire1") && _weaponFireType == FireType.Auto)
         {
             if (_ammoSlot.GetCurrentAmmo() != 0 && _readyToShoot)
@@ -56,18 +63,8 @@ public class WeaponScript : MonoBehaviour
                 StartCoroutine(Shoot());
             }
         }
-
-        RecoilDecrease();
     }
-    
-    /**private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(FPCamera.transform.position, FPCamera.transform.forward + new Vector3(
-            Random.Range(-0.5f, 0.5f),
-            Random.Range(-0.5f, 0.5f),
-            0f));
-    }**/
+
 
     private void MuzzleFlesh()
     {
