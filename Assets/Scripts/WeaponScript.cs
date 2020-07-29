@@ -8,37 +8,56 @@ using Random = UnityEngine.Random;
 
 public class WeaponScript : MonoBehaviour
 {
-
+    [Header("Prefabs Settings")] 
     [SerializeField] Camera FPCamera;
-    [SerializeField] float _range;
-    [SerializeField] float _powerOfHit = 1;
     [SerializeField] private ParticleSystem muzzleFlesh;
     [SerializeField] private ParticleSystem collisionParticle;
-    [SerializeField] private float _shotSoundRadius = 10;
-    [Range(0f, 1f)][SerializeField] private float _chanсeToProvokeByShootSound = 0.5f;
-    [SerializeField] private Ammo _ammoSlot;
+    
+    [Header("Basic Shoot Settings")] 
+    [SerializeField] float _range;
+    [SerializeField] float _powerOfHit = 1;
     [SerializeField] private float _timeBetweenShoots = 0.5f;
     [SerializeField] private int _bulletsPerHitAmount = 1;
-    [Range(0f, 0.5f)][SerializeField] private float _bulletSpread = 0f;
-    
-    
-
-    private bool _readyToShoot = true;
 
     public enum FireType {Single, Auto};
-    public FireType _thisWeaponFireType = FireType.Single;
+    public FireType _weaponFireType = FireType.Single;
     
+    [Header("Provoke Settings")] 
+    [SerializeField] private float _shotSoundRadius = 10;
+    [Range(0f, 1f)][SerializeField] private float _chanсeToProvokeByShootSound = 0.5f;
+    
+    [Header("Ammo Settings")] 
+    [SerializeField] private Ammo _ammoSlot;
+    
+    [Header("Recoil Settings")] 
+    [Range(0f, 0.5f)][SerializeField] private float _minBulletSpread = 0f;
+    [Range(0f, 0.5f)][SerializeField] private float _maxBulletSpread = 0f;
+    [Range(0f, 0.5f)][SerializeField] private float _bulletSpreadPerShoot = 0f;
+    [Range(0f, 1f)][SerializeField] private float _SpreadDecreasingPerSecond = 0f;
+
+    private float _currentBulletSpread;
+    private bool _readyToShoot = true;
+
+
+
+
+    private void Start()
+    {
+        _currentBulletSpread = _minBulletSpread;
+    }
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1") && _thisWeaponFireType == FireType.Single || 
-            Input.GetButton("Fire1") && _thisWeaponFireType == FireType.Auto)
+        if (Input.GetButtonDown("Fire1") && _weaponFireType == FireType.Single || 
+            Input.GetButton("Fire1") && _weaponFireType == FireType.Auto)
         {
             if (_ammoSlot.GetCurrentAmmo() != 0 && _readyToShoot)
             {
                 StartCoroutine(Shoot());
             }
         }
+
+        RecoilDecrease();
     }
     
     /**private void OnDrawGizmosSelected()
@@ -62,8 +81,25 @@ public class WeaponScript : MonoBehaviour
         ProvokingEnemiesByLoud();
         HitOnTarget();
         _ammoSlot.ReduceCurrentAmmo();
+        RecoilIncrease();
         yield return new WaitForSeconds(_timeBetweenShoots);
         _readyToShoot = true;
+    }
+
+    void RecoilIncrease()
+    {
+        _currentBulletSpread = Mathf.Clamp(
+            _currentBulletSpread + _bulletSpreadPerShoot,
+            _minBulletSpread,
+            _maxBulletSpread);
+    }
+
+    void RecoilDecrease()
+    {
+        _currentBulletSpread = Mathf.Clamp(
+            _currentBulletSpread = _currentBulletSpread - _SpreadDecreasingPerSecond * Time.deltaTime,
+            _minBulletSpread,
+            _maxBulletSpread);
     }
 
     private void HitOnTarget()
@@ -74,8 +110,8 @@ public class WeaponScript : MonoBehaviour
             if (Physics.Raycast(
                 FPCamera.transform.position, 
                 FPCamera.transform.forward + new Vector3(
-                    Random.Range(-_bulletSpread, _bulletSpread),
-                    Random.Range(-_bulletSpread, _bulletSpread),
+                    Random.Range(-_currentBulletSpread, _currentBulletSpread),
+                    Random.Range(-_currentBulletSpread, _currentBulletSpread),
                     0f),
                 out hit, _range))
             {
