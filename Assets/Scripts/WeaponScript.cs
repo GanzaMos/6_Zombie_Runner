@@ -11,18 +11,23 @@ public class WeaponScript : MonoBehaviour
 
     [SerializeField] Camera FPCamera;
     [SerializeField] float _range;
-    [SerializeField] int _powerOfHit = 1;
+    [SerializeField] float _powerOfHit = 1;
     [SerializeField] private ParticleSystem muzzleFlesh;
     [SerializeField] private ParticleSystem collisionParticle;
     [SerializeField] private float _shotSoundRadius = 10;
     [Range(0f, 1f)][SerializeField] private float _chanсeToProvokeByShootSound = 0.5f;
     [SerializeField] private Ammo _ammoSlot;
     [SerializeField] private float _timeBetweenShoots = 0.5f;
+    [SerializeField] private int _bulletsPerHitAmount = 1;
+    [Range(0f, 0.5f)][SerializeField] private float _bulletSpread = 0f;
+    
+    
 
     private bool _readyToShoot = true;
 
     public enum FireType {Single, Auto};
     public FireType _thisWeaponFireType = FireType.Single;
+    
 
     void Update()
     {
@@ -35,6 +40,15 @@ public class WeaponScript : MonoBehaviour
             }
         }
     }
+    
+    /**private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(FPCamera.transform.position, FPCamera.transform.forward + new Vector3(
+            Random.Range(-0.5f, 0.5f),
+            Random.Range(-0.5f, 0.5f),
+            0f));
+    }**/
 
     private void MuzzleFlesh()
     {
@@ -46,30 +60,40 @@ public class WeaponScript : MonoBehaviour
         _readyToShoot = false;
         MuzzleFlesh();
         ProvokingEnemiesByLoud();
-        _ammoSlot.ReduceCurrentAmmo();
         HitOnTarget();
+        _ammoSlot.ReduceCurrentAmmo();
         yield return new WaitForSeconds(_timeBetweenShoots);
         _readyToShoot = true;
     }
 
     private void HitOnTarget()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(FPCamera.transform.position, FPCamera.transform.forward, out hit, _range))
+        for (int i = 0; i < _bulletsPerHitAmount; i++)
         {
-            CollisionParticle(hit);
-            EnemyHealth targetHealth = hit.transform.GetComponent<EnemyHealth>();
-            if (targetHealth)
+            RaycastHit hit;
+            if (Physics.Raycast(
+                FPCamera.transform.position, 
+                FPCamera.transform.forward + new Vector3(
+                    Random.Range(-_bulletSpread, _bulletSpread),
+                    Random.Range(-_bulletSpread, _bulletSpread),
+                    0f),
+                out hit, _range))
             {
-                targetHealth.DecreaseHealth(_powerOfHit);
-            }
+                CollisionParticle(hit);
+                EnemyHealth targetHealth = hit.transform.GetComponent<EnemyHealth>();
+                if (targetHealth)
+                {
+                    targetHealth.DecreaseHealth(_powerOfHit);
+                }
 
-            EnemyAI targetAI = hit.transform.GetComponent<EnemyAI>();
-            if (targetAI)
-            {
-                targetAI.Provoking();
+                EnemyAI targetAI = hit.transform.GetComponent<EnemyAI>();
+                if (targetAI)
+                {
+                    targetAI.Provoking();
+                }
             }
         }
+        
     }
 
     private void ProvokingEnemiesByLoud()

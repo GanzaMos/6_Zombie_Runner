@@ -5,9 +5,9 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
 
-    [SerializeField] private int _enemyHealth = 5;
+    [SerializeField] private float _enemyHealth = 5;
 
-    public void DecreaseHealth(int _powerOfHit)
+    public void DecreaseHealth(float _powerOfHit)
     {
         _enemyHealth -= _powerOfHit;
         if (_enemyHealth <= 0)

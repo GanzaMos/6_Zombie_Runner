@@ -105,6 +105,10 @@ MonoBehaviour:
   _shotSoundRadius: 10
   "_chan\u0441eToProvokeByShootSound": 0.5
   _ammoSlot: {fileID: 0}
+  _timeBetweenShoots: 0.5
+  _bulletsAmount: 1
+  _bulletSpread: 0
+  _thisWeaponFireType: 0
 --- !u!1 &1326079549577358
 GameObject:
   m_ObjectHideFlags: 0
