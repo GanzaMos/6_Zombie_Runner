@@ -19,7 +19,7 @@ public class ReticlePanel : MonoBehaviour
 
     void Update()
     {
-        _size = Mathf.Clamp(1100 * _sizeModifier, _minSize, _maxSize); //todo it's hard code, different resolutions can bring different results 
+        _size = Mathf.Clamp(1300 * _sizeModifier, _minSize, _maxSize); //todo it's hard code, different resolutions can bring different results 
         reticle.sizeDelta = new Vector2(_size, _size);
     }
 }

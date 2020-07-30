@@ -30,12 +30,14 @@ public class WeaponScript : MonoBehaviour
     [SerializeField] private Ammo _ammoSlot;
     
     [Header("Recoil Settings")] 
-    [Range(0f, 0.5f)][SerializeField] private float _minBulletSpread = 0f;
-    [Range(0f, 0.5f)][SerializeField] private float _maxBulletSpread = 0f;
+    [Range(0f, 0.5f)][SerializeField] public float _minBulletSpread = 0f;
+    [Range(0f, 0.5f)][SerializeField] public float _maxBulletSpread = 0f;
     [Range(0f, 0.5f)][SerializeField] private float _bulletSpreadPerShoot = 0f;
-    [Range(0f, 1f)][SerializeField] private float _SpreadDecreasingPerSecond = 0f;
+    [Range(0f, 1f)][SerializeField] private float _spreadDecreasingPerSecond = 0f;
 
     private float _currentBulletSpread;
+    private float _bulletMovingSpread;
+    private float _bulletFireSpread;
     private bool _readyToShoot = true;
     private ReticlePanel reticlePanel;
 
@@ -49,8 +51,19 @@ public class WeaponScript : MonoBehaviour
     void Update()
     {
         CheckTermsToShoot();
-        RecoilDecrease();
+        RecoilShootDecrease();
+        RecoilTotal();
+    }
+
+    private void RecoilTotal()
+    {
+        _currentBulletSpread = _bulletFireSpread + _bulletMovingSpread;
         reticlePanel._sizeModifier = _currentBulletSpread;
+    }
+
+    public void BulletSpreadMovingFactor(float _factor)
+    {
+        _bulletMovingSpread = _factor;
     }
 
     private void CheckTermsToShoot()
@@ -78,25 +91,25 @@ public class WeaponScript : MonoBehaviour
         ProvokingEnemiesByLoud();
         HitOnTarget();
         _ammoSlot.ReduceCurrentAmmo();
-        RecoilIncrease();
+        RecoilIncreaseByShoot();
         yield return new WaitForSeconds(_timeBetweenShoots);
         _readyToShoot = true;
     }
 
-    void RecoilIncrease()
+    void RecoilIncreaseByShoot()
     {
-        _currentBulletSpread = Mathf.Clamp(
-            _currentBulletSpread + _bulletSpreadPerShoot,
+        _bulletFireSpread = Mathf.Clamp(
+            _bulletFireSpread + _bulletSpreadPerShoot,
             _minBulletSpread,
             _maxBulletSpread);
     }
 
-    void RecoilDecrease()
+    void RecoilShootDecrease()
     {
-        _currentBulletSpread = Mathf.Clamp(
-            _currentBulletSpread = _currentBulletSpread - _SpreadDecreasingPerSecond * Time.deltaTime,
+        _bulletFireSpread = Mathf.Clamp(
+            _bulletFireSpread - _spreadDecreasingPerSecond * Time.deltaTime,
             _minBulletSpread,
-            _maxBulletSpread);
+            _maxBulletSpread * 2);
     }
 
     private void HitOnTarget()
