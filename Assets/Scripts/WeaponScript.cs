@@ -19,6 +19,8 @@ public class WeaponScript : MonoBehaviour
     [SerializeField] private float _timeBetweenShoots = 0.5f;
     [SerializeField] private int _bulletsPerHitAmount = 1;
 
+    [SerializeField] AmmoType ammoType;
+
     public enum FireType {Single, Auto};
     public FireType _weaponFireType = FireType.Single;
     
@@ -38,7 +40,6 @@ public class WeaponScript : MonoBehaviour
 
     [Header("In Game Settings")]
     [SerializeField] private bool _isStock = true;
-    [SerializeField] private int _weaponKeyNumber;
 
     private float _currentBulletSpread;
     private float _bulletMovingSpread;
@@ -53,7 +54,12 @@ public class WeaponScript : MonoBehaviour
         _bulletSpreadZoomFactor = 1f;
         reticlePanel = FindObjectOfType<ReticlePanel>();
     }
-    
+
+    private void OnEnable()
+    {
+        _readyToShoot = true;
+    }
+
     void Update()
     {
         CheckTermsToShoot();
@@ -67,7 +73,7 @@ public class WeaponScript : MonoBehaviour
         if (Input.GetButtonDown("Fire1") && _weaponFireType == FireType.Single ||
             Input.GetButton("Fire1") && _weaponFireType == FireType.Auto)
         {
-            if (_ammoSlot.GetCurrentAmmo() != 0 && _readyToShoot)
+            if (_ammoSlot.GetCurrentAmmo(ammoType) != 0 && _readyToShoot)
             {
                 StartCoroutine(Shoot());
             }
@@ -80,7 +86,7 @@ public class WeaponScript : MonoBehaviour
         MuzzleFlesh();
         ProvokingEnemiesByLoud();
         HitOnTarget();
-        _ammoSlot.ReduceCurrentAmmo();
+        _ammoSlot.ReduceCurrentAmmo(ammoType);
         RecoilIncreaseByShoot();
         yield return new WaitForSeconds(_timeBetweenShoots);
         _readyToShoot = true;

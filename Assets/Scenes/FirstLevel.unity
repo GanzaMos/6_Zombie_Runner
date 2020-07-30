@@ -638,6 +638,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 066f87768082f0e469955d85666f188a, type: 3}
+--- !u!1 &42528996 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7791312588042233706, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+  m_PrefabInstance: {fileID: 853892578}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &42528998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 42528996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0712cc8ba041ee142a5b012d70ba74a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentWeapon: 2
 --- !u!1001 &54808019
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9220,8 +9238,40 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 269724910, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: AmmoSlots.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 269724910, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
       propertyPath: _ammoAmount
       value: 3000
+      objectReference: {fileID: 0}
+    - target: {fileID: 269724910, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: AmmoSlots.Array.data[1].ammoType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 269724910, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: AmmoSlots.Array.data[2].ammoType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 269724910, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: AmmoSlots.Array.data[3].ammoType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 269724910, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: AmmoSlots.Array.data[0].ammoAmount
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 269724910, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: AmmoSlots.Array.data[1].ammoAmount
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 269724910, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: AmmoSlots.Array.data[2].ammoAmount
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 269724910, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: AmmoSlots.Array.data[3].ammoAmount
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 1346186025, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
       propertyPath: _recoilDecrease
@@ -9231,9 +9281,33 @@ PrefabInstance:
       propertyPath: _weaponKeyNumber
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1655887864146574915, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: _minBulletSpread
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1655887864146574915, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: _maxBulletSpread
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1655887864146574915, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: _spreadDecreasingPerSecond
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1655887864146574915, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: _bulletSpreadPerShoot
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 3783652858571217064, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
       propertyPath: _weaponKeyNumber
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3783652858571217064, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: ammoType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3783652858571217064, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: _spreadDecreasingPerSecond
+      value: 0.075
       objectReference: {fileID: 0}
     - target: {fileID: 4283175388849862095, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
       propertyPath: DeathCanvas
@@ -9242,6 +9316,22 @@ PrefabInstance:
     - target: {fileID: 4987527211941635582, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
       propertyPath: _weaponKeyNumber
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4987527211941635582, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: ammoType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4987527211941635582, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: _spreadDecreasingPerSecond
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4987527211941635582, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: _minBulletSpread
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 4987527211941635582, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: _bulletSpreadPerShoot
+      value: 0.035
       objectReference: {fileID: 0}
     - target: {fileID: 7769559246640124508, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
       propertyPath: _spreadDecreasingPerSecond
@@ -9266,6 +9356,18 @@ PrefabInstance:
     - target: {fileID: 7769559246640124508, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
       propertyPath: _weaponKeyNumber
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7769559246640124508, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: ammoType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7769559246640124508, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: _bulletSpreadZoomFactor
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7769559246640124508, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: _minBulletSpread
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
@@ -15785,18 +15887,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 100006, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
   m_PrefabInstance: {fileID: 853892578}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1337567707
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1337567706}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0712cc8ba041ee142a5b012d70ba74a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1337567708
 MonoBehaviour:
   m_ObjectHideFlags: 0
