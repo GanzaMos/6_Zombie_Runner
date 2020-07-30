@@ -110,7 +110,6 @@ public class EnemyAI : MonoBehaviour
         
         if (Physics.Raycast(startingPoint, direction, out hit))
         {
-            Debug.Log(hit.transform.name);
             var enemy = hit.transform.GetComponent<EnemyHealth>();
             if (enemy) return true;     
         }
@@ -145,7 +144,6 @@ public class EnemyAI : MonoBehaviour
 
     private void AttackTarget()
     {
-        Debug.Log("Attack target");
         _animator.SetBool("attack", true);
     }
 

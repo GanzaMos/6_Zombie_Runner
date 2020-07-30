@@ -36,6 +36,10 @@ public class WeaponScript : MonoBehaviour
     [Range(0f, 1f)][SerializeField] private float _spreadDecreasingPerSecond = 0f;
     [Range(0f, 0.5f)][SerializeField] private float _bulletSpreadZoomFactor = 0f;
 
+    [Header("In Game Settings")]
+    [SerializeField] private bool _isStock = true;
+    [SerializeField] private int _weaponKeyNumber;
+
     private float _currentBulletSpread;
     private float _bulletMovingSpread;
     private float _bulletFireSpread;
@@ -49,7 +53,27 @@ public class WeaponScript : MonoBehaviour
         _bulletSpreadZoomFactor = 1f;
         reticlePanel = FindObjectOfType<ReticlePanel>();
     }
+    
+    void Update()
+    {
+        CheckTermsToShoot();
+        Recoil();
+    }
 
+    //INPUT FUNCTIONS
+    
+    private void CheckTermsToShoot()
+    {
+        if (Input.GetButtonDown("Fire1") && _weaponFireType == FireType.Single ||
+            Input.GetButton("Fire1") && _weaponFireType == FireType.Auto)
+        {
+            if (_ammoSlot.GetCurrentAmmo() != 0 && _readyToShoot)
+            {
+                StartCoroutine(Shoot());
+            }
+        }
+    }
+    
     IEnumerator Shoot()
     {
         _readyToShoot = false;
@@ -61,12 +85,9 @@ public class WeaponScript : MonoBehaviour
         yield return new WaitForSeconds(_timeBetweenShoots);
         _readyToShoot = true;
     }
-    void Update()
-    {
-        CheckTermsToShoot();
-        Recoil();
-    }
-
+    
+    //RECOIL FUNCTIONS
+    
     private void Recoil()
     {
         _currentBulletSpread = Mathf.Clamp(
@@ -92,18 +113,8 @@ public class WeaponScript : MonoBehaviour
     {
         _bulletSpreadZoomFactor = _zoomFactor;
     }
-
-    private void CheckTermsToShoot()
-    {
-        if (Input.GetButtonDown("Fire1") && _weaponFireType == FireType.Single ||
-            Input.GetButton("Fire1") && _weaponFireType == FireType.Auto)
-        {
-            if (_ammoSlot.GetCurrentAmmo() != 0 && _readyToShoot)
-            {
-                StartCoroutine(Shoot());
-            }
-        }
-    }
+    
+    //VISUAL EFFECT FUNCTIONS
     
     private void MuzzleFlesh()
     {
@@ -139,7 +150,15 @@ public class WeaponScript : MonoBehaviour
         }
         
     }
+    
+    void CollisionParticle(RaycastHit hit)
+    {
+        var particle = Instantiate(collisionParticle, hit.point, Quaternion.LookRotation(hit.normal));
+        Destroy(particle.gameObject, 1f);
+    }
 
+    //PROVOKING FUNCTIONS
+    
     private void ProvokingEnemiesByLoud()
     {
         Collider[] objectsInProvokeRadius = Physics.OverlapSphere(transform.position, _shotSoundRadius);
@@ -155,9 +174,13 @@ public class WeaponScript : MonoBehaviour
         }
     }
 
-    void CollisionParticle(RaycastHit hit)
+
+    //GIZMOS
+    
+    private void OnDrawGizmosSelected()
     {
-        var particle = Instantiate(collisionParticle, hit.point, Quaternion.LookRotation(hit.normal));
-        Destroy(particle.gameObject, 1f);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, _shotSoundRadius);
+        Gizmos.DrawWireSphere(transform.position, _range);
     }
 }
