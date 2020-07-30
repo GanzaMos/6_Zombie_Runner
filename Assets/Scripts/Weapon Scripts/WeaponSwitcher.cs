@@ -3,7 +3,7 @@ using UnityEngine.PlayerLoop;
 
 public class WeaponSwitcher : MonoBehaviour
 {
-    [SerializeField] int currentWeapon = 0;
+    [SerializeField] public int currentWeapon = 0;
     
     void Start()
     {

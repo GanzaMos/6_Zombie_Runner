@@ -12,6 +12,7 @@ public class WeaponScript : MonoBehaviour
     [SerializeField] Camera FPCamera;
     [SerializeField] private ParticleSystem muzzleFlesh;
     [SerializeField] private ParticleSystem collisionParticle;
+    [SerializeField] public WeaponName weaponName;
     
     [Header("Basic Shoot Settings")] 
     [SerializeField] float _range;
@@ -39,7 +40,7 @@ public class WeaponScript : MonoBehaviour
     [Range(0f, 0.5f)][SerializeField] private float _bulletSpreadZoomFactor = 0f;
 
     [Header("In Game Settings")]
-    [SerializeField] private bool _isStock = true;
+    [SerializeField] public bool _available = true;
 
     private float _currentBulletSpread;
     private float _bulletMovingSpread;

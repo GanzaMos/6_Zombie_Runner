@@ -20,4 +20,9 @@ public class PlayerHealth : MonoBehaviour
             FindObjectOfType<DeathHandler>().StartDeath();
         }
     }
+
+    public void IncreasingHealth(int increasingValue)
+    {
+        playerHitpoint += increasingValue;
+    }
 }
