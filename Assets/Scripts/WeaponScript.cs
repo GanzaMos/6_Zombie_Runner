@@ -34,6 +34,7 @@ public class WeaponScript : MonoBehaviour
     [Range(0f, 0.5f)][SerializeField] public float _maxBulletSpread = 0f;
     [Range(0f, 0.5f)][SerializeField] private float _bulletSpreadPerShoot = 0f;
     [Range(0f, 1f)][SerializeField] private float _spreadDecreasingPerSecond = 0f;
+    [Range(0f, 0.5f)][SerializeField] private float _bulletSpreadZoomFactor = 0f;
 
     private float _currentBulletSpread;
     private float _bulletMovingSpread;
@@ -45,43 +46,8 @@ public class WeaponScript : MonoBehaviour
     private void Start()
     {
         _currentBulletSpread = _minBulletSpread;
+        _bulletSpreadZoomFactor = 1f;
         reticlePanel = FindObjectOfType<ReticlePanel>();
-    }
-
-    void Update()
-    {
-        CheckTermsToShoot();
-        RecoilShootDecrease();
-        RecoilTotal();
-    }
-
-    private void RecoilTotal()
-    {
-        _currentBulletSpread = _bulletFireSpread + _bulletMovingSpread;
-        reticlePanel._sizeModifier = _currentBulletSpread;
-    }
-
-    public void BulletSpreadMovingFactor(float _factor)
-    {
-        _bulletMovingSpread = _factor;
-    }
-
-    private void CheckTermsToShoot()
-    {
-        if (Input.GetButtonDown("Fire1") && _weaponFireType == FireType.Single ||
-            Input.GetButton("Fire1") && _weaponFireType == FireType.Auto)
-        {
-            if (_ammoSlot.GetCurrentAmmo() != 0 && _readyToShoot)
-            {
-                StartCoroutine(Shoot());
-            }
-        }
-    }
-
-
-    private void MuzzleFlesh()
-    {
-        muzzleFlesh.Play();
     }
 
     IEnumerator Shoot()
@@ -95,23 +61,55 @@ public class WeaponScript : MonoBehaviour
         yield return new WaitForSeconds(_timeBetweenShoots);
         _readyToShoot = true;
     }
+    void Update()
+    {
+        CheckTermsToShoot();
+        Recoil();
+    }
 
+    private void Recoil()
+    {
+        _currentBulletSpread = Mathf.Clamp(
+            _currentBulletSpread - _spreadDecreasingPerSecond * Time.deltaTime,
+            (_bulletMovingSpread + _minBulletSpread) * _bulletSpreadZoomFactor,
+            (_bulletMovingSpread + _maxBulletSpread) * _bulletSpreadZoomFactor);
+        
+       
+        reticlePanel._sizeModifier = _currentBulletSpread;
+    }
+    
     void RecoilIncreaseByShoot()
     {
-        _bulletFireSpread = Mathf.Clamp(
-            _bulletFireSpread + _bulletSpreadPerShoot,
-            _minBulletSpread,
-            _maxBulletSpread);
+        _currentBulletSpread += _bulletSpreadPerShoot;
     }
 
-    void RecoilShootDecrease()
+    public void BulletSpreadMovingFactor(float _factor)
     {
-        _bulletFireSpread = Mathf.Clamp(
-            _bulletFireSpread - _spreadDecreasingPerSecond * Time.deltaTime,
-            _minBulletSpread,
-            _maxBulletSpread * 2);
+        _bulletMovingSpread = _factor * _bulletSpreadZoomFactor;
     }
 
+    public void SetUpBulletSpreadZoomFactor(float _zoomFactor)
+    {
+        _bulletSpreadZoomFactor = _zoomFactor;
+    }
+
+    private void CheckTermsToShoot()
+    {
+        if (Input.GetButtonDown("Fire1") && _weaponFireType == FireType.Single ||
+            Input.GetButton("Fire1") && _weaponFireType == FireType.Auto)
+        {
+            if (_ammoSlot.GetCurrentAmmo() != 0 && _readyToShoot)
+            {
+                StartCoroutine(Shoot());
+            }
+        }
+    }
+    
+    private void MuzzleFlesh()
+    {
+        muzzleFlesh.Play();
+    }
+    
     private void HitOnTarget()
     {
         for (int i = 0; i < _bulletsPerHitAmount; i++)
