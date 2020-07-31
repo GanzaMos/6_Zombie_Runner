@@ -23,6 +23,6 @@ public class PlayerHealth : MonoBehaviour
 
     public void IncreasingHealth(int increasingValue)
     {
-        playerHitpoint += increasingValue;
+        playerHitpoint = Mathf.Clamp(playerHitpoint + increasingValue, 0 , 100);
     }
 }

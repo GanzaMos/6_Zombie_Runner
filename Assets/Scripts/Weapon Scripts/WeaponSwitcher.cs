@@ -4,12 +4,15 @@ using UnityEngine.PlayerLoop;
 public class WeaponSwitcher : MonoBehaviour
 {
     [SerializeField] public int currentWeapon = 0;
+
+    private WeaponScript[] weapons;
     
     void Start()
     {
+        weapons = GetComponentsInChildren<WeaponScript>(includeInactive: true);
         SetWeaponActive();
     }
-
+    
     void Update()
     {
         int previousWeapon = currentWeapon;
@@ -22,48 +25,75 @@ public class WeaponSwitcher : MonoBehaviour
             SetWeaponActive();
         }
     }
-    
+
     void ProcessKeyInput()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) { currentWeapon = 0;}
-        if (Input.GetKeyDown(KeyCode.Alpha2)) { currentWeapon = 1;}
-        if (Input.GetKeyDown(KeyCode.Alpha3)) { currentWeapon = 2;}
-        if (Input.GetKeyDown(KeyCode.Alpha4)) { currentWeapon = 3;}
+        if (Input.GetKeyDown(KeyCode.Alpha1) && weapons[0]._available) { currentWeapon = 0;}
+        if (Input.GetKeyDown(KeyCode.Alpha2) && weapons[1]._available) { currentWeapon = 1;}
+        if (Input.GetKeyDown(KeyCode.Alpha3) && weapons[2]._available) { currentWeapon = 2;}
+        if (Input.GetKeyDown(KeyCode.Alpha4) && weapons[3]._available) { currentWeapon = 3;}
     }
 
     void ProcessScrollWheel()
     {
         if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
-            if (currentWeapon >= transform.childCount - 1)
+            int i = currentWeapon + 1;
+
+            for (int j = 0; j < weapons.Length; j++)
             {
-                currentWeapon = 0;
-            }
-            else
-            {
-                currentWeapon++;
+                if (i > weapons.Length - 1)
+                {
+                    currentWeapon = 0;
+                    break;
+                }
+                else
+                {
+                    if (weapons[i]._available)
+                    {
+                        currentWeapon = i;
+                        break;
+                    }
+                }
+
+                i++;
             }
         }
-        
+
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
-            if (currentWeapon <= 0)
+            int i = currentWeapon - 1;
+
+            for (int j = 0; j < weapons.Length; j++)
             {
-                currentWeapon = transform.childCount - 1;
-            }
-            else
-            {
-                currentWeapon--;
+                if (i < 0)
+                {
+                    i = weapons.Length - 1;
+                    if (weapons[i]._available)
+                    {
+                        currentWeapon = i;
+                        break;
+                    }
+                }
+                else
+                {
+                    if (weapons[i]._available)
+                    {
+                        currentWeapon = i;
+                        break;
+                    }
+                }
+                i--;
             }
         }
     }
 
     void SetWeaponActive()
     {
-        int weaponIndex = 0;
-        foreach (Transform weapon in transform)
+        int i = 0;
+        foreach (WeaponScript weapon in weapons)
         {
-            if (weaponIndex == currentWeapon)
+            if (weapons[i] == weapons[currentWeapon])
             {
                 weapon.gameObject.SetActive(true); 
             }
@@ -71,7 +101,7 @@ public class WeaponSwitcher : MonoBehaviour
             {
                 weapon.gameObject.SetActive(false); 
             }
-            weaponIndex++;
+            i++;
         }
     }
     

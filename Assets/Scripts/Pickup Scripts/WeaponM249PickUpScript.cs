@@ -6,7 +6,7 @@ public class WeaponM249PickUpScript : MonoBehaviour
 {
     void PickUpStuff(Collider player)
     {
-        WeaponScript[] weapons = player.GetComponentsInChildren<WeaponScript>();
+        WeaponScript[] weapons = player.GetComponentsInChildren<WeaponScript>(includeInactive:true);
         foreach (WeaponScript weapon in weapons)
         {
             if (weapon.weaponName == WeaponName.M249)
