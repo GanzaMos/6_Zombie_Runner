@@ -13,6 +13,16 @@ public class WeaponSwitcher : MonoBehaviour
         SetWeaponActive();
     }
     
+    public void WeaponPickUpHandler(int weaponNumber)
+    {
+        if (weapons[weaponNumber]._available == false)
+        {
+            weapons[weaponNumber]._available = true;
+            currentWeapon = weaponNumber;
+            SetWeaponActive();
+        }
+    }
+    
     void Update()
     {
         int previousWeapon = currentWeapon;
@@ -25,6 +35,8 @@ public class WeaponSwitcher : MonoBehaviour
             SetWeaponActive();
         }
     }
+
+
 
     void ProcessKeyInput()
     {

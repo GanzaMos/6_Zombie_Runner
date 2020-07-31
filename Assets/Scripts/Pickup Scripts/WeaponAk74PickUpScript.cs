@@ -6,14 +6,6 @@ public class WeaponAk74PickUpScript : MonoBehaviour
 {
     void PickUpStuff(Collider player)
     {
-        WeaponScript[] weapons = player.GetComponentsInChildren<WeaponScript>(includeInactive:true);
-        foreach (WeaponScript weapon in weapons)
-        {
-            if (weapon.weaponName == WeaponName.AK74)
-            {
-                weapon._available = true;
-                player.GetComponentInChildren<WeaponSwitcher>().currentWeapon = 2;
-            }
-        }
+        player.GetComponentInChildren<WeaponSwitcher>().WeaponPickUpHandler(2);
     }
 }
